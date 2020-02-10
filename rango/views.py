@@ -23,13 +23,9 @@ def index(request):
 
     context_dict['categories'] = category_list
 
-    context_dict['most_liked_category'] = category_list[0]
-
     context_dict['pages'] = page_list
 
-    context_dict['most_viewed_page'] = page_list[0]
-
-    return render(request, 'rango/index.html', context=context_dict)
+    return render(request, 'rango/index.html' , context=context_dict)
 
 def about(request):
     # Return a rendered response to send to the client.
@@ -77,7 +73,7 @@ def add_category(request):
         if form.is_valid():
             form.save(commit=True)
 
-            return redirect('/rango/')
+            return redirect(reverse('rango:index'))
         else:
             print(form.errors)
     return render(request, 'rango/add_category.html', {'form': form})
@@ -89,7 +85,7 @@ def add_page(request, category_name_slug):
         category = None
     
     if not category:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
 
     form = PageForm()
 
